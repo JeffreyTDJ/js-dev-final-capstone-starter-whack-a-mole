@@ -1,9 +1,11 @@
 const holes = document.querySelectorAll('.hole');
 const moles = document.querySelectorAll('.mole');
 const startButton = document.querySelector('#start');
-// TODO: Add the missing query selectors:
-const score; // Use querySelector() to get the score element
-const timerDisplay; // use querySelector() to get the timer element.
+// DONE: Added the missing query selectors using #element
+const score = document.querySelector('#score'); // Use querySelector() to get the score element
+const timerDisplay = document.querySelector('#timer'); //use querySelector() to get the timer element.
+// console.log(timerDisplay) fetches the timer element
+// console.log(score) fetches the score element
 
 let time = 0;
 let timer;
@@ -21,8 +23,9 @@ let difficulty = "hard";
  *
  */
 function randomInteger(min, max) {
-  // return Math.floor(Math.random() * (max - min + 1)) + min;
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+// console.log(randomInteger(0, 10)) shows this function works
 
 /**
  * Sets the time delay given a difficulty parameter.
@@ -40,9 +43,23 @@ function randomInteger(min, max) {
  *
  */
 function setDelay(difficulty) {
-  // TODO: Write your code here.
-  
+  // DONE: Write your code here.
+  if (difficulty === 'easy') {
+    return 1500; // 1.5 seconds in milliseconds
+  } else if (difficulty === 'normal') {
+    return 1000; // 1 second in milliseconds
+  } else if (difficulty === 'hard') {
+    return getRandomInteger(600, 1200); // Random integer between 600 and 1200
+  } else {
+    return -1; // Return an error code or handle invalid input as needed
+  }
 }
+function getRandomInteger(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+// console.log(setDelay('easy')) shows the setDelay function works
+// console.log(setDelay('medium')) shows the setDelay function works
+// console.log(setDelay('hard')) shows the setDelay function works
 
 /**
  * Chooses a random hole from a list of holes.
@@ -58,10 +75,22 @@ function setDelay(difficulty) {
  * const holes = document.querySelectorAll('.hole');
  * chooseHole(holes) //> returns one of the 9 holes that you defined
  */
-function chooseHole(holes) {
-  // TODO: Write your code here.
 
+function randomInteger(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+function chooseHole(holes) {
+  // DONE: Write your code here.
+  const index = randomInteger(0, 8);
+  const hole = holes[index];
+  if (hole === lastHole) {
+    return chooseHole(holes);
+  }
+  lastHole = hole;
+  return hole;
+}
+
 
 /**
 *
@@ -85,7 +114,13 @@ function chooseHole(holes) {
 */
 function gameOver() {
   // TODO: Write your code here
-  
+  if(time > 0) {
+    let timeoutID = showUp();
+    return timeoutID;
+  } else {
+    let gameStopped = stopGame();
+    return gameStopped;
+  }
 }
 
 /**
@@ -98,8 +133,8 @@ function gameOver() {
 *
 */
 function showUp() {
-  let delay = 0; // TODO: Update so that it uses setDelay()
-  const hole = 0;  // TODO: Update so that it use chooseHole()
+  let delay = setDelay(difficulty); // DONE: Update so that it uses setDelay()
+  const hole = chooseHole(holes);  // DONE: Update so that it use chooseHole()
   return showAndHide(hole, delay);
 }
 
@@ -112,13 +147,13 @@ function showUp() {
 *
 */
 function showAndHide(hole, delay){
-  // TODO: call the toggleVisibility function so that it adds the 'show' class.
-  
+  // DONE: call the toggleVisibility function so that it adds the 'show' class.
+  toggleVisibility(hole);
   const timeoutID = setTimeout(() => {
-    // TODO: call the toggleVisibility function so that it removes the 'show' class when the timer times out.
-    
+    // DONE: call the toggleVisibility function so that it removes the 'show' class when the timer times out.
+    toggleVisibility(hole);
     gameOver();
-  }, 0); // TODO: change the setTimeout delay to the one provided as a parameter
+  }, delay); // DONE: change the setTimeout delay to the one provided as a parameter
   return timeoutID;
 }
 
@@ -129,8 +164,8 @@ function showAndHide(hole, delay){
 *
 */
 function toggleVisibility(hole){
-  // TODO: add hole.classList.toggle so that it adds or removes the 'show' class.
-  
+  // DONE: added hole.classList.toggle so that it adds or removes the 'show' class.
+  hole.classList.toggle('show');
   return hole;
 }
 
@@ -243,8 +278,8 @@ function stopGame(){
 *
 */
 function startGame(){
-  //setDuration(10);
-  //showUp();
+  setDuration(10);
+  showUp();
   return "game started";
 }
 
