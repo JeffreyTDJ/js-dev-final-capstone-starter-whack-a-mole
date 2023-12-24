@@ -180,10 +180,13 @@ function toggleVisibility(hole){
 *
 */
 function updateScore() {
-  // TODO: Write your code here
-
+  // DONE: Increment the 'points' global variable by 1 point
+  let points = 0;
+  points++;
+  score.textContent = points;
   return points;
 }
+// console.log(points) shows the function works & points are being tallied
 
 /**
 *
@@ -194,8 +197,8 @@ function updateScore() {
 */
 function clearScore() {
   // TODO: Write your code here
-  // points = 0;
-  // score.textContent = points;
+  points = 0;
+  score.textContent = points;
   return points;
 }
 
@@ -234,6 +237,8 @@ function startTimer() {
 function whack(event) {
   // TODO: Write your code here.
   // call updateScore()
+  console.log("whack!");
+  updateScore();
   return points;
 }
 
@@ -244,7 +249,9 @@ function whack(event) {
 */
 function setEventListeners(){
   // TODO: Write your code here
-
+  moles.forEach(
+    mole => mole.addEventListener('click', whack)
+  );
   return moles;
 }
 
@@ -280,8 +287,10 @@ function stopGame(){
 function startGame(){
   setDuration(10);
   showUp();
+  setEventListeners();
   return "game started";
 }
+
 
 startButton.addEventListener("click", startGame);
 
