@@ -11,7 +11,7 @@ let time = 0;
 let timer;
 let lastHole = 0;
 let points = 0;
-let difficulty = "hard";
+let difficulty = "easy";
 
 /**
  * Generates a random integer within a range.
@@ -181,7 +181,6 @@ function toggleVisibility(hole){
 */
 function updateScore() {
   // DONE: Increment the 'points' global variable by 1 point
-  let points = 0;
   points++;
   score.textContent = points;
   return points;
@@ -196,7 +195,7 @@ function updateScore() {
 *
 */
 function clearScore() {
-  // TODO: Write your code here
+  // DONE: Write your code here
   points = 0;
   score.textContent = points;
   return points;
@@ -210,6 +209,10 @@ function clearScore() {
 function updateTimer() {
   // TODO: Write your code here.
   // hint: this code is provided to you in the instructions.
+  if (time > 0) {
+    time -= 1;
+    timerDisplay.textContent = time;
+  }
   
   return time;
 }
@@ -222,7 +225,7 @@ function updateTimer() {
 */
 function startTimer() {
   // TODO: Write your code here
-  // timer = setInterval(updateTimer, 1000);
+  timer = setInterval(updateTimer, 1000);
   return timer;
 }
 
@@ -237,10 +240,12 @@ function startTimer() {
 function whack(event) {
   // TODO: Write your code here.
   // call updateScore()
+  
   console.log("whack!");
   updateScore();
   return points;
 }
+
 
 /**
 *
@@ -285,9 +290,11 @@ function stopGame(){
 *
 */
 function startGame(){
+  startTimer();
   setDuration(10);
   showUp();
   setEventListeners();
+  clearScore();
   return "game started";
 }
 
